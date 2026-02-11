@@ -8,19 +8,28 @@ app.use(express.json());
 
 
 app.post("/notes", async (req, res) => {
+  try {
 
-    const data = req.body; // title, description
+    const { title, description } = req.body;
 
-    await noteModel.create({
-        title: data.title,
-        description: data.description
-    })
+    const note = await noteModel.create({
+      title,
+      description
+    });
 
-    res.status(201).json({
-        message: "Note created"
-    })
+    return res.status(201).json({
+      message: "Note created",
+      note
+    });
 
-})
+  } catch (error) {
+
+    return res.status(500).json({
+      message: "Server Error"
+    });
+
+  }
+});
 
 
 app.get("/notes", async (req, res) => {
@@ -73,6 +82,21 @@ app.delete("/notes/:id", async (req, res) => {
     }
 
 })
+
+
+app.patch("/notes/:id", async (req, res) => {
+
+    const id = req.params.id;
+    const description = req.body.description
+    const title = req.body.title
+
+    await noteModel.findOneAndUpdate({_id:id}, {description: description, title: title})
+
+    res.status(201).json({
+        message: "Note Updated"
+    })
+
+} )
 
 
 module.exports = app;
