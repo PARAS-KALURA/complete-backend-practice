@@ -1,9 +1,8 @@
 const app = require("./src/app");
+const connectDB = require("./src/db/db")
 
-app.get("/about", (req, res) => {
-    res.send("Hello about")
-}  )
+connectDB();
 
-app.listen(PORT, () => {
-    console.log(`Server ${PORT} is running `);
+app.listen(3000, () => {
+    console.log("Server is running");
 })

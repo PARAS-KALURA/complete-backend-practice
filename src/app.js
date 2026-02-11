@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
+const noteModel = require("./models/note.model")
 
-const PORT = 3000;
+
 
 app.use(express.json());
 
@@ -52,8 +53,8 @@ app.delete("/notes/:index", (req, res) => {
 
 })
 
-app.listen(PORT, () => {
-    console.log(`Server ${PORT} is running`);
+app.listen(3000, () => {
+    console.log(`Server is running`);
 });
 
 module.exports = app;
